@@ -1,18 +1,35 @@
-$HOME/user
+$HOME
+|-- doc
+|   `-- files 					This file
 |-- .kde
 |   |-- Autostart
-|   |   |-- cron-15min.sh 			Run every 15 minuites after user logs in
-|   |   `-- cron-1min.sh 			Run every 1 minuite after the user logs in
+|   |   |-- cron-15min.sh 			User level script to run a job every 15 min
+|   |   `-- cron-1min.sh 			User level script to run a job every minuite
 |   `-- share
 |       `-- config
-|           `-- kdesktoprc 			Config file for the kde screen saver
+|           `-- kdesktoprc 			Config file for the kde screensaver
+|-- OpenOffice Macros
+|   |-- ConvertImpresstoPNG.xba 		Open office Macro to convert impress files to png
+|   `-- script.xlb 				Registry of Open office macro files
+|-- .openoffice.org
+|   `-- 3
+|       `-- user
+|           `-- basic
+|               `-- Standard
+|                   |-- ConvertImpresstoPNG.xba link -> ~/OpenOffice Macros/ConvertImpresstoPNG.xba
+|                   `-- script.xlb 		link -> ~/OpenOffice Macros/script.xlb
 |-- .openoffice.org2
 |   `-- user
 |       `-- basic
 |           `-- Standard
-|               |-- ConvertImpresstoPNG.xba 	Open office Macro to convert from impress to png
-|               `-- script.xlb 			Registry of open office macros
-|-- slideshow.pl 				Main slideshow file
-|-- updatecache.pl 				update the xscreensaver cache file
-|-- .xscreensaver 				Config file for the xscreen saver
-`-- .xscreensaver-getimage.cache 		x screen saver cache file
+|               |-- ConvertImpresstoPNG.xba 	link -> ~/OpenOffice Macros/ConvertImpresstoPNG.xba
+|               `-- script.xlb 			link -> ~/OpenOffice Macros/script.xlb
+|
+|-- impress-show.sh 				Bash script to run impress slideshows
+|-- options.pm 					Config file for the slide show
+|-- slideshow.pl 				Main slide program file.
+|-- updatecache.pl 				Updates the .xscreensaver-getimage.cache file
+|-- .xscreensaver 				Config file for the xscreensaver
+`-- .xscreensaver-getimage.cache 		Contains a list of images to be displayed with xscreensaver
+
+15 directories, 16 files
