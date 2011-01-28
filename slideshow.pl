@@ -32,7 +32,7 @@ foreach (readdir ($show)) {
 			if ((stat("$showdir/$magicodp"))[9] != (stat("$convertdir/$magicodp"))[9]) {
 				# modify time on the file is different!
 				# Stop the running process
-				`killall soffice.bin`;
+		 		`killall soffice.bin`;
 				sleep 15;
 				# Delete the old file
 				unlink "$convertdir/$magicodp";
@@ -48,8 +48,8 @@ foreach (readdir ($show)) {
 			else{
 				# We are running and up to date, Nothing left to do.
 				exit 0;
-			}
-		}
+		 	}
+		}  
 	}
 	elsif (m/$magicvideo/){
 		for my $ext (@videoextentions){
@@ -71,7 +71,7 @@ foreach (readdir ($show)) {
 						# Keep the mtime of the old and new files in sync
 						utime(time, ((stat("$showdir/$magicvideo"))[9]), "$convertdir/$magicvideo");
 						# restart the new video
-						exec("$mplaybin ");
+						exec("$mplaybin -loop 0 -fs $convertdir/$magicvideo");
 						#leave
 						exit 0;
 					}
