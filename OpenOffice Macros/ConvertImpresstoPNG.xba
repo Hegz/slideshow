@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE script:module PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "module.dtd">
+<script:module xmlns:script="http://openoffice.org/2000/script" script:name="ConvertImpresstoPNG" script:language="StarBasic">REM  *****  BASIC  *****
+
+Sub Main(inFile, outDir)
+odoc=fnOpenDoc(inFile)
+octl=odoc.getcurrentcontroller()
+
+for i = 0 to odoc.getdrawpages().count -1
+   slide=odoc.drawpages(i)
+   octl.setCurrentPage(slide)
+&apos;    Save it as a PNG.
+      oDoc.storeToUrl( ConvertToURL( outDir + &quot;slide&quot;+str(i)+ &quot;.png&quot; ), _
+         Array( MakePropertyValue( &quot;FilterName&quot;, &quot;impress_png_Export&quot; ) ) )
+next
+odoc.dispose
+Shell(&quot;pkill soffice.bin&quot;)
+
+End Sub
+Function MakePropertyValue( Optional cName As String, Optional uValue ) As com.sun.star.beans.PropertyValue
+   oPropertyValue = createUnoStruct( &quot;com.sun.star.beans.PropertyValue&quot; )
+   If Not IsMissing( cName ) Then
+      oPropertyValue.Name = cName
+   EndIf
+   If Not IsMissing( uValue ) Then
+      oPropertyValue.Value = uValue
+   EndIf
+   MakePropertyValue() = oPropertyValue
+End Function 
+
+function fnOpenDoc(sFile)
+	sURL = ConvertToURL(sFile)
+	fnOpenDoc = StarDesktop.loadComponentFromURL(sURL, &quot;_blank&quot;, 0, Array())
+end function
+</script:module>

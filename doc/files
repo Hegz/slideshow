@@ -1,0 +1,18 @@
+$HOME/user
+|-- .kde
+|   |-- Autostart
+|   |   |-- cron-15min.sh 			Run every 15 minuites after user logs in
+|   |   `-- cron-1min.sh 			Run every 1 minuite after the user logs in
+|   `-- share
+|       `-- config
+|           `-- kdesktoprc 			Config file for the kde screen saver
+|-- .openoffice.org2
+|   `-- user
+|       `-- basic
+|           `-- Standard
+|               |-- ConvertImpresstoPNG.xba 	Open office Macro to convert from impress to png
+|               `-- script.xlb 			Registry of open office macros
+|-- slideshow.pl 				Main slideshow file
+|-- updatecache.pl 				update the xscreensaver cache file
+|-- .xscreensaver 				Config file for the xscreen saver
+`-- .xscreensaver-getimage.cache 		x screen saver cache file

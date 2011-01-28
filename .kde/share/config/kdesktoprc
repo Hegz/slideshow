@@ -1,0 +1,16 @@
+[MiniCli]
+CompletionItems=konsole:2,sd73passwd.pl:1,$HOME/ooimpressloop.sh:1,xscreensaver-demo:2
+History=xscreensaver-demo,konsole,$HOME/ooimpressloop.sh,sd73passwd.pl
+
+[ScreenSaver]
+ActionBottomLeft=0
+ActionBottomRight=0
+ActionTopLeft=0
+ActionTopRight=0
+Enabled=true
+Priority=10
+Saver=glslideshow.desktop
+Timeout=60
+
+[Version]
+KDEVersionRelease=10
