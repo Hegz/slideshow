@@ -82,21 +82,8 @@ foreach (readdir ($show)) {
 				}
 			}
 		}
-
-
 	}
-
-		# Magic video has been found
 }
-
-# Check in the $showdir for a magic video file
-# if it's not playing already, Disable the screensaver and play it.
-# Stop the job and and restart it if the file mtime changes.
-# Exit the script
-
-
-# Check for and process non magic files as per usual.
-# enable the screen saver.
 
 my %existdocs;
 
@@ -131,6 +118,11 @@ close $log;
 
 #update the cache
 eval {require "updatecache.pl"};
+
+# Check for changes to the options file, and update the quick users guide
+if ((stat('option.pm'))[9] != (stat("$showdir/README.txt"))[9]) {
+	eval {require "mkdoc.pl"};
+}
 
 sub rmdircontent {
 	# empty the contents of a directory

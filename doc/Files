@@ -1,0 +1,60 @@
+.
+|-- doc/
+|   |-- Files                                   This File
+|   |
+|   `-- usage_Template.txt                      Template file, Filled in by mkdoc on installation, 
+|                                               and during runs of slideshow.pl if the options 
+|						file has changed.
+|						
+|-- .kde/
+|   |-- Autostart/
+|   |   |-- cron-15min.sh* 			User level cron script.  Runs the slideshow.pl file 
+|   |	|					every 15 minutes 
+|   |	|					
+|   |   `-- cron-1min.sh* 			User level cron script.  Runs the updatecache.pl 
+|   |						file every minute.
+|   |						
+|   `-- share/
+|       `-- config/
+|           `-- kdesktoprc 			Config file for the kde screen saver.
+|
+|-- OpenOffice Macros/
+|   |-- ConvertImpresstoPNG.xba 		Macro file for openoffice.  Converts impress files
+|   |						to PNG files.
+|   |						
+|   `-- script.xlb 				Openoffice script registry.
+|-- .openoffice.org/
+|   `-- 3/
+|       `-- user/
+|           `-- basic/
+|               `-- Standard/
+|                   |-- ConvertImpresstoPNG.xba link to OpenOffice Macros/ConvertImpresstoPNG.xba
+|                   `-- script.xlb              link to OpenOffice Macros/script.xlb
+|-- .openoffice.org2/
+|   `-- user/
+|       `-- basic/
+|           `-- Standard/
+|               |-- ConvertImpresstoPNG.xba 	link to OpenOffice Macros/ConvertImpresstoPNG.xba
+|               `-- script.xlb 			link to OpenOffice Macros/script.xlb
+|-- impress-show.sh*
+|-- install.pl* 				install file for the slideshow setup.  Creates all
+|						required users/folders and sets correct permissions.
+|
+|-- mkdoc.pl* 					Builds a quick readme file, based on the values 
+|						defined in options.pm.
+|
+|-- options.pm 					file that stores values used by many of the scripts
+|						Must be properly configured for atleast the 
+|						workstation name prior to running install.pl
+|
+|-- slideshow.pl* 				Main processing script.  Checks for magic files and
+|						plays them.  Checks for updates/deletes to slideshow
+|						documents and runs the conversion.  Runs mkdoc.pl
+|						if the options file has changed.
+|
+|-- updatecache.pl* 				Updates the .xscreensaver-getimage.cache
+|
+|-- .xscreensaver 				options file for the xscreensaver
+|
+`-- .xscreensaver-getimage.cache 		cache of all images to display randomly on the 
+						screen saver.

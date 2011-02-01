@@ -24,37 +24,40 @@ our @ISA = qw(Exporter);
 #### General Options ####
 
 # Machine dns name to run the script on
-my $machine          ='t101-1';
+our $machine          ='t101-1';
 
 # User account to run the slideshow
-my $showuser         ='hallmon';
+our $showuser         ='hallmon';
+
+# Set this variable to 1 to state that the software is ready to be installed.
+our $install          =0;
 
 
 #### Directory Locations ####
 
 # slide show user home folder
-my $userhomedir      ='/home/h/hallmon';
+our $userhomedir      ='/home/h/hallmon';
 
 # where the raw files are stored by the steno
-my $showdir          ='/home/public/TV';                
+our $showdir          ='/home/public/TV';                
 
 # location of the x screen saver image cache file
-my $xscreencache     ="$userhomedir/.xscreensaver-getimage.cache";
+our $xscreencache     ="$userhomedir/.xscreensaver-getimage.cache";
 
 # where the converted slides are to be stored
-my $convertdir       ="$showdir/.ConvertedSlides";
+our $convertdir       ="$showdir/.ConvertedSlides";
 
 
 #### Program Locations ####
 
 # location of the open office bin file
-my $sofficebin       ='/usr/lib/openoffice/program/soffice.bin';
+our $sofficebin       ='/usr/lib/openoffice/program/soffice.bin';
 
 # location of the Imagemagick convert program
-my $convertbin       ='/usr/bin/convert';
+our $convertbin       ='/usr/bin/convert';
 
 # location of the mplayer program
-my $mplaybin         ='/usr/bin/mplayer';
+our $mplaybin         ='/usr/bin/mplayer';
 
 
 #### Logging Options ####
@@ -63,28 +66,28 @@ my $mplaybin         ='/usr/bin/mplayer';
 my $today            =POSIX::strftime "%Y-%b-%e", localtime;
 
 # The location to store log files.
-my $logdir           ="$userhomedir/log";
+our $logdir           ="$userhomedir/log";
 
 # Log file name for slideshow converts/updates/deletes
-my $showlogfile      ="$logdir/$today-Slideshow.log";
+our $showlogfile      ="$logdir/$today-Slideshow.log";
 
 
 #### Automatic Play Options ####
 
 # The name of the odp file to play exclusively if it exists.
-my $magicodp         ="Automatic.odp";
+our $magicodp         ='Automatic.odp';
 
 # The name of the video file to play exclusively if it exists.
 # use EXT as a placeholder file extention.
-my $magicvideo       ="Automatic.EXT";
+our $magicvideo       ='Automatic.EXT';
 
 # Valid video file extentions. default is Just a small smattering 
 # expand as needed based off what Mplayer can play.
-my @videoextentions  =qw(avi mpg wmv asf mov mp4);
+our @videoextentions  =qw(avi mpg wmv asf mov mp4);
 
 
 #Variables exported by this config file, No need to edit.
-our @EXPORT = qw($machine $showuser 
+our @EXPORT = qw($machine $showuser $install 
 		$userhomedir $showdir $xscreencache $convertdir 
 		$sofficebin $convertbin $mplaybin 
 		$logdir $showlogfile  

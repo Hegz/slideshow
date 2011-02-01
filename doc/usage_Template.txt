@@ -1,0 +1,45 @@
+Automatic Slide show README
+
+Files in this folder will be displayed to the Hallway computer screen.
+
+There are 3 possible methods to have files displayed to the hallway monitor: 
+Automatic OpenOffice.org Slideshow, Automatic Movie file, or mixed document 
+slideshow.
+
+Automatic OpenOffice.org Slideshow
+----------------------------------
+
+Place a file in this folder called 'MAGICODP' and it will be displayed on the
+monitor exacatly as it was designed.  The system will check for changes and/or 
+for a new slide show to the every 15 minuites.
+
+This is most useful if you want to just display information such as daily 
+announcements or the current block rotation. Just the MAGICODP slide show will 
+be shown, even if there are other documents in this folder.
+
+
+Automatic Movie file
+----------------------------------
+
+Place a movie file in this folder called 'MAGICVIDEO' where EXT can be any of:
+VIDEOEXTENTIONS.  The file will be played on a loop on the monitor exactly as 
+it appears.  The system will check for changes and/or a new movie file every
+15 minuites.
+
+Currently this is the only way to show a movie file on the monitor, and only 
+one video file can be shown at any give time.  the 'MAGICVIDEO' file will be 
+shown unless there is a 'MAGICODP' in this folder.
+
+
+Mixed Document Slideshow
+----------------------------------
+
+Documents ( OpenOffice Impress slide shows. Adobe PDF Documents) as well as 
+picture files (jpg, gif, png) will be displayed in a random order to the 
+monitor.  The folder will be checked every 15 minuites for updates to the 
+Document files.  Pictures files will be updated every minuite.
+
+This is useful to show a slideshow of recent school events, mixed with 
+anouncements or other content that would normally be displayed in a OpenOffice
+Impress document.  If the file 'MAGICODP' or 'MAGICVIDEO' exist in this folder, 
+one of those options will be displayed instead.
