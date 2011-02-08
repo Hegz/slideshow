@@ -1,0 +1,12 @@
+
+INSTALL
+	Install should set the correct paths in the following files
+		.xscreensaver
+		.kde/Autolaunch/cron-15m.sh
+		.kde/Autolaunch/cron-1m.sh
+	Add Update/Remove ability to the install script
+
+SLIDESHOW
+	Rewrite the mplayer and soffice impress sections of slideshow.pl
+
+
