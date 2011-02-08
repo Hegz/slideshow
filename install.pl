@@ -188,8 +188,9 @@ elsif ($uninstall) {
 		local $^I = '.bak';
 		local @ARGV = ('/var/lib/vservers/vs1/etc/gdm/autologin');
 		while (<>){
-			s/$machine:$showuser//;
-			print;
+			unless (m/$machine:$showuser/){
+				print;
+			}
 		}
 		unlink ('/var/lib/vservers/vs1/etc/gdm/autologin.bak');
 	}
