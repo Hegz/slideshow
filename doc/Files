@@ -16,6 +16,7 @@
 |   |						
 |   `-- share/
 |       `-- config/
+            |-- glslideshowrc 			Config file for the glslideshow screen saver demo.
 |           `-- kdesktoprc 			Config file for the kde screen saver.
 |
 |-- OpenOffice Macros/

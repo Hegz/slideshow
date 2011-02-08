@@ -24,55 +24,13 @@ our @ISA = qw(Exporter);
 #### General Options ####
 
 # Machine dns name to run the script on
-our $machine          ='s244-50';
+our $machine          ='';
 
 # User account to run the slideshow
-our $showuser         ='newtesthallmon';
+our $showuser         ='hallmon';
 
 # Set this variable to 1 to state that the software is ready to be installed.
-our $install          =1;
-
-
-#### Directory Locations ####
-
-# slide show user home folder
-our $userhomedir      ='/home/n/newtesthallmon';
-
-# where the raw files are stored by the steno
-our $showdir          ='/home/public/TV-test';                
-
-# location of the x screen saver image cache file
-our $xscreencache     ="$userhomedir/.xscreensaver-getimage.cache";
-
-# where the converted slides are to be stored
-our $convertdir       ="$showdir/.ConvertedSlides";
-
-
-#### Program Locations ####
-
-# location of the open office bin file for converts
-our $sofficebin       ='/usr/lib/openoffice/program/soffice.bin';
-
-# Location of the soffice executable for the slideshow
-our $sofficeslides    ='/usr/bin/soffice';
-
-# location of the Imagemagick convert program
-our $convertbin       ='/usr/bin/convert';
-
-# location of the mplayer program
-our $mplaybin         ='/usr/bin/mplayer';
-
-
-#### Logging Options ####
-
-# current date string YYYY-MM-DD
-my $today            =POSIX::strftime "%Y-%b-%e", localtime;
-
-# The location to store log files.
-our $logdir           ="$userhomedir/log";
-
-# Log file name for slideshow converts/updates/deletes
-our $showlogfile      ="$logdir/$today-Slideshow.log";
+our $install          =0;
 
 
 #### Automatic Play Options ####
@@ -87,6 +45,48 @@ our $magicvideo       ='Automatic.EXT';
 # Valid video file extentions. default is Just a small smattering 
 # expand as needed based off what Mplayer can play.
 our @videoextentions  =qw(avi mpg wmv asf mov mp4);
+
+
+#### Directory Locations ####
+
+# slide show user home folder
+our $userhomedir      ='/home/' . substr($showuser,0,1) . "/$showuser";
+
+# where the raw files are stored by the steno
+our $showdir          ='/home/public/TV';                
+
+# location of the x screen saver image cache file
+our $xscreencache     ="$userhomedir/.xscreensaver-getimage.cache";
+
+# where the converted slides are to be stored
+our $convertdir       ="$showdir/.ConvertedSlides";
+
+
+#### Program Locations ####
+
+# location of the open office bin file for converts
+our $sofficebin       ='/usr/lib/openoffice/program/soffice.bin';
+
+# Location of the open office wrapper executable for the slideshow
+our $sofficeslides    ='/usr/bin/soffice';
+
+# location of the Imagemagick convert program
+our $convertbin       ='/usr/bin/convert';
+
+# location of the mplayer program
+our $mplaybin         ='/usr/bin/mplayer';
+
+
+#### Logging Options ####
+
+# current date string YYYY-MM-DD
+my $today             =POSIX::strftime "%Y-%b-%e", localtime;
+
+# The location to store log files.
+our $logdir           ="$userhomedir/log";
+
+# Log file name for slideshow converts/updates/deletes
+our $showlogfile      ="$logdir/$today-Slideshow.log";
 
 
 #Variables exported by this config file, No need to edit.

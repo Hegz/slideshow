@@ -32,7 +32,7 @@ dpmsOff:	2:00:00
 grabDesktopImages:  False
 grabVideoFrames:    False
 chooseRandomImages: True
-imageDirectory:	/home/public/TV/.ConvertedSlides
+imageDirectory:	PATH
 
 mode:		one
 selected:	212
