@@ -137,13 +137,13 @@ if ($install) {
 	# Update the cron scripts for the correct paths
 	{
 		local $^I = '.bak';
-		local @ARGV = ("$userhomedir/.kde/Autostart/cron-15m.sh", "$userhomedir/.kde/Autostart/cron-1m.sh");
+		local @ARGV = ("$userhomedir/.kde/Autostart/cron-15min.sh", "$userhomedir/.kde/Autostart/cron-1min.sh");
 		while (<>){
 			s/PATH/$userhomedir/;
 			s/LOG/$logdir/;
 			print
 		}
-		unlink ("$userhomedir/.kde/Autostart/cron-15m.sh.bak", "$userhomedir/.kde/Autostart/cron-1m.sh.bak");
+		unlink ("$userhomedir/.kde/Autostart/cron-15min.sh.bak", "$userhomedir/.kde/Autostart/cron-1min.sh.bak");
 	}
 
 	# Update the .xscreensaver file with the correct slideshow path
