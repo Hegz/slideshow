@@ -6,7 +6,5 @@ INSTALL
 		.kde/Autolaunch/cron-1m.sh
 	Add Update/Remove ability to the install script
 
-SLIDESHOW
-	Rewrite the mplayer and soffice impress sections of slideshow.pl
 
 
