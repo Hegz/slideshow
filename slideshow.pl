@@ -17,23 +17,28 @@ use options;
 
 $ENV{'DISPLAY'} = ':0';# needed for open office headless
 
-open my $log, '>>', "$showlogfile" || die("Cannot open log file ($showlogfile). $!");
-opendir my $show, $showdir || die("Cannot Open Slide show Directory ($showdir). $!");
+open my $log, '>>', "$showlogfile" or die("Cannot open log file ($showlogfile). $!");
+opendir my $show, $showdir or die("Cannot Open Slide show Directory ($showdir). $!");
 
-# Strip the EXT from the magic video filename
-$magicvideo =~ s/\..*$/./;
+{
+# Strip the .EXT from the magic video filename
+local $magicvideo = $magicvideo;
+$magicvideo =~ s/\..*$//;
 
 foreach (readdir ($show)) {
 # Check for magic files.  Only the first magic file found will play.
 	if (m/$magicodp/){
 		# Magic odp found
-		if (`ps -a u -u hallmon | grep $magicodp -c`) {
+		if (`ps -a u -u hallmon | grep -v grep | grep -c $magicodp ` != 0) {
+			print "we're running $magicodp\n";
 			# Magic is running. Is it the current version?
 			if ((stat("$showdir/$magicodp"))[9] != (stat("$convertdir/$magicodp"))[9]) {
 				# modify time on the file is different!
 				# Stop the running process
-		 		`killall soffice.bin`;
+				`killall soffice`;
+				`killall mplayer`;
 				sleep 15;
+
 				# Delete the old file
 				unlink "$convertdir/$magicodp";
 				# Copy the new file to dodge file locks.
@@ -41,28 +46,45 @@ foreach (readdir ($show)) {
 				# Keep the mtime of the old and new files in sync
 				utime(time, ((stat("$showdir/$magicodp"))[9]), "$convertdir/$magicodp");
 				# Restart the slideshow.
-				exec("$sofficebin -norestore -view -show $convertdir/$magicodp");
+				exec("$sofficeslides -norestore -view -show $convertdir/$magicodp");
 				# Nothing left to do, Leave happy.
 				exit 0;
 			}
 			else{
 				# We are running and up to date, Nothing left to do.
 				exit 0;
-		 	}
+			}
+		
+		}
+		else {
+			# Magic has been found, but is not running.
+			# Copy the new file to dodge file locks.
+			copy( "$showdir/$magicodp","$convertdir/$magicodp");
+			# Keep the mtime of the old and new files in sync
+			utime(time, ((stat("$showdir/$magicodp"))[9]), "$convertdir/$magicodp");
+			# Disable screensaver & start the slideshow.
+			`killall kdesktop_lock`;
+			`killall mplayer`;
+			`dcop kdesktop KScreensaverIface enable 0`;
+			system("$sofficeslides -norestore -view -show $convertdir/$magicodp");
+			# Nothing left to do, Leave happy.
+			exit 0;
+		
 		}  
 	}
 	elsif (m/$magicvideo/){
 		for my $ext (@videoextentions){
 			# Unroll the file extentions list
-			if (m/$_\.$ext/){
+			if (m/$magicvideo\.$ext/){
 				# Magic video has been found.
 				$magicvideo = $_;
-				if (`ps -a u -u hallmon | grep $magicvideo -c`){
+				if (`ps -a u -u hallmon | grep -v grep | grep -c $magicvideo ` != 0) {
 					# Magic video is running.
 					if ((stat("$showdir/$magicvideo"))[9] != (stat("$convertdir/$magicvideo"))[9]) {
 						# Magic video m time differs.
 						# Stop the running process
 						`killall mplayer`;
+						`killall soffice`;
 						sleep 15;
 						# Delete the old files
 						unlink "$convertdir/$magicvideo";
@@ -71,7 +93,12 @@ foreach (readdir ($show)) {
 						# Keep the mtime of the old and new files in sync
 						utime(time, ((stat("$showdir/$magicvideo"))[9]), "$convertdir/$magicvideo");
 						# restart the new video
-						exec("$mplaybin -loop 0 -fs $convertdir/$magicvideo");
+						# Disable screensaver & start the video
+						`killall kdesktop_lock`;
+						`dcop kdesktop KScreensaverIface enable 0`;
+						unless(fork()){
+							exec "$mplaybin -fs -quiet $convertdir/$magicvideo -loop 0 &> /dev/null";
+						}
 						#leave
 						exit 0;
 					}
@@ -80,10 +107,35 @@ foreach (readdir ($show)) {
 						exit 0;
 					}
 				}
+				else {
+					# Magic has been found, but is not running at the moment.
+					#Copy the video in to place
+					copy( "$showdir/$magicvideo", "$convertdir/$magicvideo");
+					# Keep the mtime of the original and copied files in sync
+					utime(time, ((stat("$showdir/$magicvideo"))[9]), "$convertdir/$magicvideo");
+					# Disable screensaver & start the video
+					`killall kdesktop_lock`;
+					`killall soffice`;
+					`dcop kdesktop KScreensaverIface enable 0`;
+					unless(fork()){
+						exec "$mplaybin -fs -quiet $convertdir/$magicvideo -loop 0 &> /dev/null";
+					}
+					#leave
+					exit 0;
+				}
 			}
 		}
 	}
 }
+}
+# No magic has been found in the presentation folder, kill any soffice or mplayer processes
+`killall soffice.bin`;
+`killall mplayer`;
+
+# Enable the screen saver
+`dcop kdesktop KScreensaverIface enable 1`;
+
+rewinddir $show;
 
 my %existdocs;
 
@@ -114,27 +166,34 @@ foreach (readdir($convert)) {
 	rmdir $dir;	
 }
 closedir($convert);
-close $log;
+# close $log;
 
 #update the cache
 eval {require "updatecache.pl"};
 
+
 # Check for changes to the options file, and update the quick users guide
-if ((stat('option.pm'))[9] != (stat("$showdir/README.txt"))[9]) {
+if (((stat("$userhomedir/options.pm"))[9]) != ((stat("$showdir/README.txt"))[9])) {
 	eval {require "mkdoc.pl"};
 }
+
+# Start the screensaver and exit the script.
+exec('/usr/bin/kdesktop_lock');
 
 sub rmdircontent {
 	# empty the contents of a directory
 	my ($dir) = @_;
-	opendir my $todelete, "$dir";
-	my @del = grep { !/^\./ && -f "$dir/$_"} readdir($todelete); 
-	foreach (@del){
-		unlink "$dir/$_";
-	}
-	close($todelete);
 	my $mytime = &gettime;
-	return "[D] $mytime $dir\n";
+	if ( -d $dir) {
+		opendir my $todelete, "$dir";
+		my @del = grep { !/^\./ && -f "$dir/$_"} readdir($todelete); 
+		foreach (@del){
+			unlink "$dir/$_";
+		}
+		close($todelete);
+		return "[D] $mytime $dir\n";
+	}
+	return "[W] $mytime Directory $dir dosn't exist\n";
 }
 
 sub processfile {
@@ -150,6 +209,7 @@ sub processfile {
 		# Dir exists and have differerent mtimes, remove old slides and recreate
 		&rmdircontent($slidesdir);
 		system $cmd;
+		print "$cmd\n";
 		utime(time, $docmtime, $slidesdir);
 		my $mytime = &gettime;
 		$logmsg = "[U] $mytime \"$file\" As: $slidesdir\n";
@@ -158,6 +218,7 @@ sub processfile {
 		# convert slides and set the mtime of the directory
 		mkdir($slidesdir);
 		system $cmd;
+		print "$cmd\n";
 		utime(time, $docmtime, $slidesdir);
 		my $mytime = &gettime;
 		$logmsg = "[C] $mytime \"$file\" As: $slidesdir\n";

@@ -21,9 +21,9 @@ use strict;
 use warnings;
 use File::Copy;
 use File::Path;
+use Cwd;
 use options;
 
-print "$magicodp\n";
 # Verify the config file.
 unless ($install) {
 	print "Please edit the config file options.pm to ensure that eveything is setup correctly.\n";
@@ -39,7 +39,7 @@ unless ($ENV{'USER'} eq 'root'){
 	exit;
 }
 # Check to see that $showuser isn't already on the system
-open my $passwdfile, '<', '/etc/passwd';
+open my $passwdfile, '<', '/etc/passwd' or die("error opening passwd file $!\n");
 while (<$passwdfile>) {
 	if (m/$showuser/){
 		print "the user account $showuser is already active on the system.  Is the slideshow account already setup?\n";
@@ -48,7 +48,8 @@ while (<$passwdfile>) {
 }
 
 # check for the source files in the current dir.
-opendir my $source, "$ENV{'PWD'}";
+my $currentdir = getcwd;
+opendir my $source, "$currentdir" or die("Error opening current directory $!\n");
 my @localfiles = readdir($source);
 my $correctfolder = 0;
 foreach (@localfiles) {
@@ -67,17 +68,17 @@ unless ($correctfolder) {
 `useradd -d $userhomedir -m -s /bin/bash -g teachers -c 'Account for the automatic slideshow computer' $showuser `;
 
 # Copy the files from the current dir to the users folder.
-opendir $source, "$ENV{'PWD'}";
-my @files = readdir($source);
-foreach (@files){
-	copy($_, $userhomedir);
-}
+`cp $currentdir/* -r $userhomedir`;
+`cp $currentdir/.??* -r $userhomedir`;
+
+# create the log file folder
+mkpath($logdir);
 
 # Set correct ownership/permissions on the new files
 `chown $showuser\\: ~$showuser -R`;
 
 # Set the machine to login automatically.
-open my $autologin, '>>', '/var/lib/vservers/vs1/etc/gdm/autologin/';
+open my $autologin, '>>', '/var/lib/vservers/vs1/etc/gdm/autologin' or die("Error opening autologin file $!\n");
 print $autologin "$machine:$showuser\n";
 close $autologin;
 

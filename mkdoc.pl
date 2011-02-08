@@ -26,8 +26,6 @@ use options;
 open my $template, '<', 'doc/usage_Template.txt';
 open my $readme, '>', "$showdir/README.txt";
 
-print "$machine";
-
 # Fill in the template file
 while (<$template>){
 	s/MAGICODP/$magicodp/g;

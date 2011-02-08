@@ -24,22 +24,22 @@ our @ISA = qw(Exporter);
 #### General Options ####
 
 # Machine dns name to run the script on
-our $machine          ='t101-1';
+our $machine          ='s244-50';
 
 # User account to run the slideshow
-our $showuser         ='hallmon';
+our $showuser         ='newtesthallmon';
 
 # Set this variable to 1 to state that the software is ready to be installed.
-our $install          =0;
+our $install          =1;
 
 
 #### Directory Locations ####
 
 # slide show user home folder
-our $userhomedir      ='/home/h/hallmon';
+our $userhomedir      ='/home/n/newtesthallmon';
 
 # where the raw files are stored by the steno
-our $showdir          ='/home/public/TV';                
+our $showdir          ='/home/public/TV-test';                
 
 # location of the x screen saver image cache file
 our $xscreencache     ="$userhomedir/.xscreensaver-getimage.cache";
@@ -50,8 +50,11 @@ our $convertdir       ="$showdir/.ConvertedSlides";
 
 #### Program Locations ####
 
-# location of the open office bin file
+# location of the open office bin file for converts
 our $sofficebin       ='/usr/lib/openoffice/program/soffice.bin';
+
+# Location of the soffice executable for the slideshow
+our $sofficeslides    ='/usr/bin/soffice';
 
 # location of the Imagemagick convert program
 our $convertbin       ='/usr/bin/convert';
@@ -89,6 +92,6 @@ our @videoextentions  =qw(avi mpg wmv asf mov mp4);
 #Variables exported by this config file, No need to edit.
 our @EXPORT = qw($machine $showuser $install 
 		$userhomedir $showdir $xscreencache $convertdir 
-		$sofficebin $convertbin $mplaybin 
+		$sofficebin $sofficeslides $convertbin $mplaybin 
 		$logdir $showlogfile  
 		$magicodp $magicvideo @videoextentions );
