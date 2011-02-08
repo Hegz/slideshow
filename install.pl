@@ -179,7 +179,7 @@ elsif ($uninstall) {
 		exit;
 	}
 	# Remove $convertdir
-	remove_tree($convertdir);
+	rmtree($convertdir);
 
 	# remove README
 	unlink ("$showdir/README.txt");
