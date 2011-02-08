@@ -47,7 +47,7 @@ if (($install + $update + $uninstall) > 1 ){
 
 if ($install) {
 	# Verify the config file.
-	unless ($install) {
+	unless ($installrdy) {
 		print "Please edit the config file options.pm to ensure that eveything is setup correctly.\n";
 		print "Install Aborting, Unsuccessful\n";
 		exit;

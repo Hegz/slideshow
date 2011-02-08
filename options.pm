@@ -30,7 +30,7 @@ our $machine          ='';
 our $showuser         ='hallmon';
 
 # Set this variable to 1 to state that the software is ready to be installed.
-our $install          =0;
+our $installrdy       =0;
 
 
 #### Automatic Play Options ####
@@ -90,7 +90,7 @@ our $showlogfile      ="$logdir/$today-Slideshow.log";
 
 
 #Variables exported by this config file, No need to edit.
-our @EXPORT = qw($machine $showuser $install 
+our @EXPORT = qw($machine $showuser $installrdy 
 		$userhomedir $showdir $xscreencache $convertdir 
 		$sofficebin $sofficeslides $convertbin $mplaybin 
 		$logdir $showlogfile  
