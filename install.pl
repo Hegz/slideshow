@@ -198,7 +198,6 @@ elsif ($uninstall) {
 
 	print "Uninstall Successful\n";
 	print "Please restart the slideshow machine ($machine) to complete the Uninstallation\n";
-	`cd`;
 	exit;
 }
 elsif ($update) {
