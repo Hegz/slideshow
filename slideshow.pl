@@ -41,7 +41,7 @@ my $mytime = gettime();
 	$magicvideo =~ s/\..*$//;
 
 	foreach ( readdir($show) ) {
-		if (m/$magicodp/) {
+		if (m/^$magicodp$/) {
 			if ( `ps -a u -u hallmon | grep -v grep | grep -c $magicodp `
 				!= 0 ) {
 				if ( ( stat("$showdir/$magicodp") )[9]
