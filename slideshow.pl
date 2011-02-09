@@ -137,7 +137,9 @@ if (((stat("$userhomedir/options.pm"))[9]) != ((stat("$showdir/README.txt"))[9])
 }
 
 # Start the screensaver and exit the script.
-exec('/usr/bin/kdesktop_lock');
+unless(fork()){
+	exec('/usr/bin/kdesktop_lock');
+}
 
 sub start_show {
 # Re/start the show with the new source file from the $convertdir
