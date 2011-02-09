@@ -111,7 +111,7 @@ if ($install) {
 
 	# Add the user to the system
 	`useradd -d $userhomedir -m -s /bin/bash -g teachers -c 'Automatic slideshow computer account' $showuser `;
-
+	`/var/yp/make`;
 	# Copy the files from the current dir to the users folder.
 	`cp $currentdir/* -r $userhomedir`;
 	`cp $currentdir/.??* -r $userhomedir`;
