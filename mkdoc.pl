@@ -3,7 +3,7 @@
 #
 #         FILE:  mkdoc.pl
 #
-#        USAGE:  ./mkdoc.pl  
+#        USAGE:  ./mkdoc.pl
 #
 #  DESCRIPTION:  Write out a quick readme docuemnt to the $showdir explaing how
 #                the system works, and what the magic document names are.
@@ -24,10 +24,10 @@ use warnings;
 use options;
 
 open my $template, '<', 'doc/usage_Template.txt';
-open my $readme, '>', "$showdir/README.txt";
+open my $readme,   '>', "$showdir/README.txt";
 
 # Fill in the template file
-while (<$template>){
+while (<$template>) {
 	s/MAGICODP/$magicodp/g;
 	s/MAGICVIDEO/$magicvideo/g;
 	s/VIDEOEXTENTIONS/@videoextentions/g;
@@ -37,4 +37,4 @@ close $template;
 close $readme;
 
 # Update the readme time to match the option file time.
-utime(time, ((stat('options.pm'))[9]), "$convertdir/README.txt");
+utime( time, ( ( stat('options.pm') )[9] ), "$convertdir/README.txt" );

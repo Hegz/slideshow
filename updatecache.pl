@@ -4,29 +4,31 @@ use strict;
 
 use options;
 
-open my $cache, '>', $xscreencache or die ("Cannont open cache file($xscreencache): $!");
+open my $cache, '>', $xscreencache
+	or die("Cannont open cache file($xscreencache): $!");
 print $cache "$convertdir\n";
-&listfiles("$convertdir","", $cache);
+&listfiles( "$convertdir", "", $cache );
 close $cache;
 
 sub listfiles {
-#Output a file list in the format that xscreensaver expects it
-	my ($dir, $disp, $FH) = @_;
-	opendir my $show ,"$dir";
-	my @dircontent = grep {!/^\./} readdir($show);
+
+	#Output a file list in the format that xscreensaver expects it
+	my ( $dir, $disp, $FH ) = @_;
+	opendir my $show, "$dir";
+	my @dircontent = grep { !/^\./ } readdir($show);
 	closedir($show);
-	foreach (@dircontent){
+	foreach (@dircontent) {
 		if ( -d "$dir/$_" ) {
-			&listfiles("$dir/$_","$disp/$_", $FH);
+			&listfiles( "$dir/$_", "$disp/$_", $FH );
 		}
-		elsif ( lc($_) =~ /\.png$/ ){
+		elsif ( lc($_) =~ /\.png$/ ) {
 			print $FH "$disp/$_\n";
 		}
-		elsif ( lc($_) =~ /\.gif/ ){
+		elsif ( lc($_) =~ /\.gif/ ) {
 			print $FH "$disp/$_\n";
 		}
-		elsif ( lc($_) =~ m/\.jpg/ ){
+		elsif ( lc($_) =~ m/\.jpg/ ) {
 			print $FH "$disp/$_\n";
 		}
 	}
-}	
+}
