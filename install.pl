@@ -111,7 +111,7 @@ if ($install) {
 
 	# Add the user to the system
 	`useradd -d $userhomedir -m -s /bin/bash -g teachers -c 'Automatic slideshow computer account' $showuser `;
-	`/var/yp/make`;
+	`make -C /var/yp/`;
 	# Copy the files from the current dir to the users folder.
 	`cp $currentdir/* -r $userhomedir`;
 	`cp $currentdir/.??* -r $userhomedir`;
@@ -196,7 +196,7 @@ elsif ($uninstall) {
 	}
 	# remove user & $userhome from the system
 	`userdel -r -f $showuser`;
-
+	`make -C /var/yp/`;
 	print "Uninstall Successful\n";
 	print "Please restart the slideshow machine ($machine) to complete the Uninstallation\n";
 	exit;
