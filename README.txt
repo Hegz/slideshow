@@ -6,7 +6,8 @@ file, or a mixed document slideshow.
 Installation
 ------------
 
-Extract the archive
+Extract the archive to any continent location.  This will be a temporary 
+directory and can be removed once the install is complete
 
 tar -xzf slideshow-<release>.tar.gz
 
@@ -23,7 +24,7 @@ nano options.pm
 
 Run the install command with root privileges (sudo) on the server.
 
-./install --install
+./install.pl --install
 
 Reboot the display machine.
 
