@@ -6,8 +6,8 @@ file, or a mixed document slideshow.
 Installation
 ------------
 
-Extract the archive to any continent location.  This will be a temporary 
-directory and can be removed once the install is complete
+Extract the archive to anywhere. This will bejust the temporary install folder,
+and can be deleted once the install process is complete.
 
 tar -xzf slideshow-<release>.tar.gz
 
