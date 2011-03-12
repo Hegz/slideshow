@@ -19,7 +19,12 @@ sub listfiles {
 	closedir($show);
 	foreach (@dircontent) {
 		if ( -d "$dir/$_" ) {
-			&listfiles( "$dir/$_", "$disp/$_", $FH );
+			if ( $disp eq '' ) {
+				&listfiles( "$dir/$_", "$_", $FH );
+			}
+			else {
+				&listfiles( "$dir/$_", "$disp/$_", $FH );
+			}
 		}
 		elsif ( lc($_) =~ /\.png$/ ) {
 			print $FH "$disp/$_\n";
