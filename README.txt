@@ -43,3 +43,13 @@ On the server, change directories to the $showuser  home folder, (default:
 ./install --uninstall
 
 Reboot the display machine. It will boot up to the normal login screen.
+
+
+Attribution:
+-------------
+The Open office Macro for converting slides to pictures is a slightly 
+modified version of the code available at:   
+http://www.oooforum.org/forum/viewtopic.phtml?t=8985
+
+all other files are written by Adam Fairbrother, and made available under 
+the gpl version 2 or later. 
