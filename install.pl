@@ -153,7 +153,7 @@ if ($install) {
 
 	# Set permisions on the slideshow folder and the hidden folder
 	`chown $showuser\\: $showdir -R`;
-	`chmod 770 $showdir -R`;
+	`chmod 2770 $showdir -R`;
 
 	# Update the cron scripts for the correct paths
 	{
