@@ -1,0 +1,5 @@
+The /home/public/TV folder must be readable by the Slideshow user, and just a note All sub folders must be executable by the show user to be readable.
+
+the .ConvertedSlides folder must be readable and writable.
+
+the .ConvertedSlided folder should have a link back to the parent directory.
