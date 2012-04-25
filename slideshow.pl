@@ -172,7 +172,7 @@ sub start_show {
 	my ($file) = @_;
 
 	# Kill everything
-	system 'killall soffice';
+	system 'killall soffice.bin';
 	sleep 5;
 	system 'killall mplayer';
 	sleep 5;
