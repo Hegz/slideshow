@@ -62,7 +62,7 @@ our $convertdir = "$showdir/.ConvertedSlides";
 #### Program Locations ####
 
 # location of the open office bin file for converts
-our $sofficebin = '/usr/lib/openoffice/program/soffice.bin';
+our $sofficebin = '/usr/lib/libreoffice/program/soffice.bin';
 
 # Location of the open office wrapper executable for the slideshow
 our $sofficeslides = '/usr/bin/soffice';

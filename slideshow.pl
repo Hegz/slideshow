@@ -18,8 +18,10 @@
 #       AUTHOR:  Adam Fairbrother (AF), afairbrother@sd73.bc.ca
 #      COMPANY:  School District No. 73
 #      VERSION:  1.0
-#      CREATED:  10-03-27
-#      UPDATED:  11-02-08 11:49:57 AM
+#      CREATED:  2010-03-27
+#      UPDATED:  2011-02-08 11:49:57 AM
+#      UPDATED:  2013-10-18 - switch from kde to xfce & xscreensaver - D.M.
+#      UPDATED:  2014-01-30 - bugfix to background xscreensaver
 #===============================================================================
 
 use warnings;
@@ -42,7 +44,7 @@ my $mytime = gettime();
 
 	foreach ( readdir($show) ) {
 		if (m/^$magicodp$/) {
-			if ( `ps -a u -u hallmon | grep -v grep | grep -c $magicodp `
+			if ( `ps -a u -u $showuser | grep -v grep | grep -c $magicodp `
 				!= 0 ) {
 				if ( ( stat("$showdir/$magicodp") )[9]
 					!= ( stat("$convertdir/$magicodp") )[9] ) {
@@ -72,7 +74,7 @@ my $mytime = gettime();
 			for my $ext (@videoextentions) {
 				if (m/$magicvideo\.$ext/) {
 					$magicvideo = $_;
-					if (`ps -a u -u hallmon | grep -v grep | grep -c $magicvideo `
+					if (`ps -a u -u $showuser | grep -v grep | grep -c $magicvideo `
 						!= 0 ) {
 						if ( ( stat("$showdir/$magicvideo") )[9]
 							!= ( stat("$convertdir/$magicvideo") )[9] ) {
@@ -110,7 +112,10 @@ my $mytime = gettime();
 `killall mplayer`;
 
 # Enable the screen saver
-`dcop kdesktop KScreensaverIface enable 1`;
+#`dcop kdesktop KScreensaverIface enable 1`;
+`xscreensaver -no-splash &`;
+sleep 3;
+`xscreensaver-command --activate &`;
 
 rewinddir $show;
 
@@ -122,14 +127,14 @@ foreach ( readdir($show) ) {
 		#Process ODP files
 		my $slidesdir = "$convertdir/$_/";
 		my $cmd =
-			"$sofficebin -headless \"macro:///Standard.ConvertImpresstoPNG.Main($showdir/$_,$slidesdir)\"";
+			"$sofficebin --headless \"macro:///Standard.ConvertImpresstoPNG.Main($showdir/$_,$slidesdir)\"";
 		print $log &processfile( $_, $slidesdir, $cmd );
 	}
 	elsif ( lc($_) =~ m/\.pdf/ ) {
 
 		# Process PDF files
 		my $slidesdir = "$convertdir/$_/";
-		my $cmd       = "$convertbin \"$showdir/$_\" \"$slidesdir/$_.png\"";
+		my $cmd       = "$convertbin -alpha off \"$showdir/$_\" \"$slidesdir/$_.png\"";
 		print $log &processfile( $_, $slidesdir, $cmd );
 	}
 
@@ -161,7 +166,7 @@ if ( ( ( stat("$userhomedir/options.pm") )[9] )
 
 # Start the screensaver and exit the script.
 unless ( fork() ) {
-	exec('/usr/bin/kdesktop_lock');
+	exec('/usr/bin/xscreensaver-command --activate &');
 }
 exit;
 
@@ -176,9 +181,10 @@ sub start_show {
 	sleep 5;
 	system 'killall mplayer';
 	sleep 5;
-	system 'killall kdesktop_lock';
+	system 'xscreensaver-command --deactivate &';
 	sleep 2;
-	system 'dcop kdesktop KScreensaverIface enable 0';
+	#system 'dcop kdesktop KScreensaverIface enable 0';
+	system 'killall xscreensaver';
 
 	if ( -e "$convertdir/$file" ) {
 		unlink "$convertdir/$magicodp";

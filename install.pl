@@ -107,7 +107,7 @@ if ($install) {
 	}
 
 	# begin the installation steps here,
-	my $autologinfile = '/var/lib/vservers/vs1/etc/gdm/autologin';
+	my $autologinfile = '/var/lib/vservers/vs1/etc/lightdm/autologin';
 	my $autologin;
 	open $autologin, '<', $autologinfile
 		or die("Error opening autologin file for read ($autologinfile):$!\n");
