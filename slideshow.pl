@@ -52,7 +52,7 @@ my $mytime = gettime();
 					print $log
 						"[I] $mytime Updated $magicodp Impress slideshow.\n";
 					exec(
-						"$sofficeslides -norestore -view -show $convertdir/$magicodp"
+						"$sofficeslides -norestore -view -show $convertdir/$magicodp &"
 					);
 					exit 0;
 				}
@@ -65,7 +65,7 @@ my $mytime = gettime();
 				print $log
 					"[I] $mytime Started $magicodp Impress slideshow.\n";
 				system(
-					"$sofficeslides -norestore -view -show $convertdir/$magicodp"
+					"$sofficeslides -norestore -view -show $convertdir/$magicodp &"
 				);
 				exit 0;
 			}
