@@ -45,6 +45,8 @@ our $magicvideo = 'Automatic.EXT';
 # expand as needed based off what Mplayer can play.
 our @videoextentions = qw(avi mpg wmv asf mov mp4);
 
+our $magicnovisign = 'Novisign.key';
+
 #### Directory Locations ####
 
 # slide show user home folder
@@ -89,4 +91,4 @@ our @EXPORT = qw($machine $showuser $installrdy
 	$userhomedir $showdir $xscreencache $convertdir
 	$sofficebin $sofficeslides $convertbin $mplaybin
 	$logdir $showlogfile
-	$magicodp $magicvideo @videoextentions );
+	$magicodp $magicvideo @videoextentions $magicnovisign);

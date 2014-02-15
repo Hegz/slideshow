@@ -104,12 +104,38 @@ my $mytime = gettime();
 				}
 			}
 		}
+		elsif (m/$magicnovisign/) {
+			open my $nsfile, '<', $magicnovisign;
+			my $nskey;
+			while (<$nsfile>) {
+				chomp;
+				$nskey = $_ unless m/^$/;
+			}
+			if ( `ps -a u -u $showuser | grep -v grep | grep -c $nskey `
+				!= 0 ) {
+				if ( ( stat("$showdir/$magicnovisign") )[9]
+					!= ( stat("$convertdir/$magicnovisign") )[9] ) {
+					start_show($magicnovisign);
+					print $log
+						"[I] $mytime Updated Novisign to screenkey $nskey\n";
+					exec(
+						"./nsplayer.pl -k $nskey &"
+					);
+					exit 0;
+				}
+				else {
+					exit 0;
+				}
+			}
+		}
 	}
 }
+
 
 # No magic has been found in the presentation folder, kill any soffice or mplayer processes
 `killall soffice.bin`;
 `killall mplayer`;
+`killall firefox`;
 
 # Enable the screen saver
 #`dcop kdesktop KScreensaverIface enable 1`;
@@ -185,6 +211,8 @@ sub start_show {
 	sleep 2;
 	#system 'dcop kdesktop KScreensaverIface enable 0';
 	system 'killall xscreensaver';
+	sleep 2;
+	system 'killall firefox';
 
 	if ( -e "$convertdir/$file" ) {
 		unlink "$convertdir/$magicodp";
