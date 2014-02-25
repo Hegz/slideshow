@@ -139,9 +139,9 @@ my $mytime = gettime();
 
 # Enable the screen saver
 #`dcop kdesktop KScreensaverIface enable 1`;
-`xscreensaver -no-splash &`;
+`xscreensaver -no-splash > /dev/null 2>&1 &`;
 sleep 3;
-`xscreensaver-command --activate &`;
+`xscreensaver-command --activate > /dev/null 2>&1 &`;
 
 rewinddir $show;
 
@@ -192,7 +192,7 @@ if ( ( ( stat("$userhomedir/options.pm") )[9] )
 
 # Start the screensaver and exit the script.
 unless ( fork() ) {
-	exec('/usr/bin/xscreensaver-command --activate &');
+	exec('/usr/bin/xscreensaver-command --activate > /dev/null 2>&1 &');
 }
 exit;
 
@@ -207,10 +207,10 @@ sub start_show {
 	sleep 5;
 	system 'killall mplayer';
 	sleep 5;
-	system 'xscreensaver-command --deactivate &';
+	system 'xscreensaver-command --deactivate > /dev/null 2>&1 &';
 	sleep 2;
 	#system 'dcop kdesktop KScreensaverIface enable 0';
-	system 'killall xscreensaver';
+	system 'xscreensaver-command -exit > /dev/null 2>&1 &';
 	sleep 2;
 	system 'killall firefox';
 
