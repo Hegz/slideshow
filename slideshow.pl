@@ -152,6 +152,7 @@ foreach ( readdir($show) ) {
 
 		#Process ODP files
 		my $slidesdir = "$convertdir/$_/";
+		$slidesdir =~ s/(.*)\.(odp)/$1_$2/;
 		my $cmd =
 			"$sofficebin --headless \"macro:///Standard.ConvertImpresstoPNG.Main($showdir/$_,$slidesdir)\"";
 		print $log &processfile( $_, $slidesdir, $cmd );
@@ -160,6 +161,7 @@ foreach ( readdir($show) ) {
 
 		# Process PDF files
 		my $slidesdir = "$convertdir/$_/";
+		$slidesdir =~ s/(.*)\.(pdf)/$1_$2/;
 		my $cmd       = "$convertbin -alpha off \"$showdir/$_\" \"$slidesdir/$_.png\"";
 		print $log &processfile( $_, $slidesdir, $cmd );
 	}
@@ -172,6 +174,7 @@ closedir $show;
 opendir my $convert, "$convertdir";
 foreach ( readdir($convert) ) {
 	my $dir = "$convertdir/$_";
+	$_ =~ s/(.*)_([^.]+)/$1\.$2/;
 	next if ( ( $_ eq "." ) || ( $_ eq ".." ) || ( -l $dir ) );
 	next if ( exists( $existdocs{$_} ) );
 	print $log &rmdircontent($dir);
