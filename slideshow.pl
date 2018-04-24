@@ -218,7 +218,7 @@ sub start_show {
 	system 'killall firefox';
 
 	if ( -e "$convertdir/$file" ) {
-		unlink "$convertdir/$magicodp";
+		unlink "$convertdir/$file";
 	}
 	copy( "$showdir/$file", "$convertdir/$file" );
 	utime( time, ( ( stat("$showdir/$file") )[9] ), "$convertdir/$file" );
